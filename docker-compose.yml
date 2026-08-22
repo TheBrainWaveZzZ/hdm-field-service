@@ -1,0 +1,15 @@
+services:
+  backend:
+    build:
+      context: ./backend
+
+    container_name: hdm-fieldservice-backend
+
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - ./backend/.env
+
+    volumes:
+      - ./backend/app:/app/app
