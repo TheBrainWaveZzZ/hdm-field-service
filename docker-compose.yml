@@ -6,10 +6,31 @@ services:
     container_name: hdm-fieldservice-backend
 
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
 
     env_file:
       - ./backend/.env
 
     volumes:
       - ./backend/app:/app/app
+
+  frontend:
+    build:
+      context: ./frontend
+
+    container_name: hdm-fieldservice-frontend
+
+    ports:
+      - "3000:3000"
+
+    environment:
+    - WATCHPACK_POLLING=true
+    - NEXT_PUBLIC_API_URL=http://localhost:8000
+
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+
+    depends_on:
+      - backend
